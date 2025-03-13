@@ -5,14 +5,18 @@ class Indice:
         self.indice = {}
         self.listaEncadeada = []
 
+    @staticmethod
     def getHash(chaveBusca):
         return hash(chaveBusca)
     
     def addBucket(self, bucket):
-        if self.listaEncadeada.length == 0:
-            self.listaEncadeada.append(Node(bucket))
+        no = Node(bucket)
+        if len(self.listaEncadeada) == 0:
+            self.listaEncadeada.append(no)
         else:
-            self.listaEncadeada[self.listaEncadeada.length-1].setNext(bucket)
+            ultimo = self.listaEncadeada[-1]
+            ultimo.setNext(no)
+            self.listaEncadeada.append(no)
 
     def addLinhaIndice(self, hashCode,listaEncadeada):
         if f"{hashCode}" in self.indice:
@@ -22,7 +26,7 @@ class Indice:
 
 
     def busca(self, chaveBusca):
-        return self.indice[f"{getHash(chaveBusca)}"]
+        return self.indice[f"{self.getHash(chaveBusca)}"]
 
 
 
