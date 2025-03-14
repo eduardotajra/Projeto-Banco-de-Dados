@@ -1,19 +1,29 @@
-from Indice import Indice
+
 
 class Bucket:
-    def _init_(self, chaveBuscaPagina, enderecoPagina,fr = 16):
-        self.chaveBuscaPagina = chaveBuscaPagina
+    def _init_(self, chaveBusca, enderecoPagina):
+        self.chaveBusca = f"{chaveBusca}"
         self.enderecoPagina = enderecoPagina
         self.bucket = {
-            chaveBuscaPagina : enderecoPagina,
+            self.chaveBusca : self.enderecoPagina,
         }
-        self.tamanho_atual = 0
-        self.fr = fr
-        self.proximoBucket = 0
+        self.tamanho_atual = 1
+        self.fr = 16
+        self.next : Bucket
 
-    def addLinha(self, chaveBuscaPagina, enderecoPagina):
-        if self.tamanho_atual < self.fr:
-            self.bucket[chaveBuscaPagina] = enderecoPagina
+    def getChaveBusca(self):
+        return self.chaveBusca
+    
+    def estaCheio(self):
+        if self.tamanho_atual == self.fr:
+            return True
         else:
-            Indice.addBucket(Bucket(chaveBuscaPagina, enderecoPagina))
+            return False
+
+    def setNext(self, next):
+        self.next = next
+
+    def getNext(self):
+        return self.next
+
 
