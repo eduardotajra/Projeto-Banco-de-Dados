@@ -1,7 +1,7 @@
 
 
 class Bucket:
-    def _init_(self, chaveBusca, enderecoPagina):
+    def __init__(self, chaveBusca, enderecoPagina):
         self.chaveBusca = f"{chaveBusca}"
         self.enderecoPagina = enderecoPagina
         self.bucket = {
@@ -25,5 +25,3 @@ class Bucket:
 
     def getNext(self):
         return self.next
-
-

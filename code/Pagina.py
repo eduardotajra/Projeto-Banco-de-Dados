@@ -1,15 +1,37 @@
 from Tupla import Tupla
 
 class Pagina:
-    tuplas : list[Tupla]
-    capacidade : int
-
-    def _init_(self, capacidade):
-        self.tuplas = []
+    capacidade = 15
+    def __init__(self, capacidade : int = 15):
         self.capacidade = capacidade
+        self.listaTuplas = []
 
-    def setNovaTupla(self, tupla):
-        if len(self.tuplas) < self.capacidade:
-            self.tuplas.append(tupla)
+    @staticmethod
+    def setNovaTupla(listaPaginas, tupla: Tupla):
+        if not listaPaginas:
+            nova_pagina = Pagina()
+            nova_pagina.listaTuplas.append(tupla)
+            listaPaginas.append(nova_pagina)
         else:
-            print('Página chegou à capacidade máxima.')
+            ultima_pagina = listaPaginas[-1]
+            if len(ultima_pagina.listaTuplas) < ultima_pagina.capacidade:
+                ultima_pagina.listaTuplas.append(tupla)
+            else:
+                nova_pagina = Pagina(ultima_pagina.capacidade)
+                nova_pagina.listaTuplas.append(tupla)
+                listaPaginas.append(nova_pagina)
+
+    
+
+
+    
+    def getListaTuplas(self):
+        return self.listaTuplas
+
+    @staticmethod
+    def getCapacidade():
+        return Pagina.capacidade
+
+    
+
+        
