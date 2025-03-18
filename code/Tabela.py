@@ -18,20 +18,24 @@ class Tabela:
     
     def apontaEndPag(lista, enderecoPagina):
         return lista[enderecoPagina]
+    
+    def percorreBucket(bucketRaiz, chaveBusca):
+        bucket = bucketRaiz
+        while True:
+            if bucket.bucket.get(chaveBusca) is None:
+                bucket = bucket.getNext()
+            else:
+                enderecoPagina = bucket.bucket[chaveBusca]
+                return enderecoPagina
+
 
     @staticmethod
     def buscaPorCB(chaveBusca, Indice, ListaPag):
         bucket = Indice.busca(chaveBusca)
-        endPag = bucket.bucket[chaveBusca]
-        # for bucket in listaBuckets:
-        #     if bucket.bucket.get(chaveBusca) == None:
-        #         pass
-        #     else:
-        #         endPag = bucket.bucket.get(chaveBusca)
-        #         break
-        
-        pagina = Tabela.apontaEndPag(ListaPag, endPag)
+        endPag = Tabela.percorreBucket(bucket, chaveBusca)        
+        pagina = Tabela.apontaEndPag(ListaPag, endPag)        
         listaTuplas = pagina.getListaTuplas()
+        
         for tupla in listaTuplas:
             if tupla.getChaveBusca() == chaveBusca:
                 return tupla.getDados()

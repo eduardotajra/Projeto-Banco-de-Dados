@@ -2,10 +2,13 @@ from Bucket import Bucket
 
 class Indice:
     indice = {}
+    colisao = 0 # colisao / len(conteudoArquivo)
+    overflow = 0 # overflow /colisao
 
     @staticmethod
     def getHash(chaveBusca):
-        return hash(chaveBusca)
+        # return hash(chaveBusca)
+        return len(chaveBusca)
     
     @staticmethod
     def addBucket(bucket):
@@ -23,9 +26,11 @@ class Indice:
         else:
             ultimo = Indice.getUltimoNo(bucketRaiz)
         if ultimo == None or ultimo.estaCheio():
+            Indice.overflow += 1
             Indice.addBucket(Bucket(chaveBusca, enderecoPagina))
         else:
             ultimo.bucket[f"{chaveBusca}"] = enderecoPagina
+            Indice.colisao +=1
             ultimo.tamanho_atual += 1
         
     @staticmethod
@@ -37,14 +42,18 @@ class Indice:
         return Indice.indice.get(f"{Indice.getHash(chaveBusca)}")
 
     @staticmethod
-    def setBucketUltimoNo(self, bucket, bucketHash):
-        noRaiz = self.indice[f"{bucketHash}"]
-        ultimoNo = self.getUltimoNo(noRaiz)
+    def setBucketUltimoNo(bucket, bucketHash):
+        noRaiz = Indice.indice[f"{bucketHash}"]
+        ultimoNo = Indice.getUltimoNo(noRaiz)
         ultimoNo.setNext(bucket)
 
     def getUltimoNo(noRaiz):
+        teste = 0
+        if noRaiz.getNext() == None:
+            return noRaiz
         nextBucket = noRaiz.getNext()
-        while nextBucket is not None:
+        while nextBucket.getNext() is not None:
+            teste += 1
             nextBucket = nextBucket.getNext()
         return nextBucket
 

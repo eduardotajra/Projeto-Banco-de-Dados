@@ -8,8 +8,8 @@ class Bucket:
             self.chaveBusca : self.enderecoPagina,
         }
         self.tamanho_atual = 1
-        self.fr = 16
-        self.next : Bucket
+        self.fr = 10000
+        self.next : Bucket = None
 
     def getChaveBusca(self):
         return self.chaveBusca
