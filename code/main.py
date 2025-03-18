@@ -43,6 +43,9 @@ print("Tempo do TableScan: {:.3f} ms".format(tempo_tableScan))
 print("Resultado da BuscaPorCB:", resultado_buscaPorCB)
 print("Tempo da BuscaPorCB: {:.3f} ms".format(tempo_buscaPorCB))
 
+print(f"Taxa de colisao: {Indice.getColisao(len(conteudoArquivo)) *100}%")
+print(f"Taxa de overflow: {Indice.getOverflow()*100}%")
+
 print("Indices:" + Indice.indice)
 
 

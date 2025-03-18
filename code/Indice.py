@@ -2,8 +2,15 @@ from Bucket import Bucket
 
 class Indice:
     indice = {}
-    colisao = 0 # colisao / len(conteudoArquivo)
-    overflow = 0 # overflow /colisao
+    colisao = 0 
+    overflow = 0 
+    quantBuckets = 0
+
+    def getColisao(quantPalavras): # colisao / len(conteudoArquivo)
+        return Indice.colisao / quantPalavras
+    
+    def getOverflow(): # bucket com overflow / total de buckets
+        return Indice.overflow / Indice.quantBuckets
 
     @staticmethod
     def getHash(chaveBusca):
@@ -26,8 +33,10 @@ class Indice:
         else:
             ultimo = Indice.getUltimoNo(bucketRaiz)
         if ultimo == None or ultimo.estaCheio():
-            Indice.overflow += 1
+            if bucketRaiz != None and bucketRaiz.getNext() == None:
+                Indice.overflow += 1
             Indice.addBucket(Bucket(chaveBusca, enderecoPagina))
+            Indice.quantBuckets += 1
         else:
             ultimo.bucket[f"{chaveBusca}"] = enderecoPagina
             Indice.colisao +=1
